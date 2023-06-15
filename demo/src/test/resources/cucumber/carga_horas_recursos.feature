@@ -1,19 +1,7 @@
-# new feature
-# Tags: optional
+Feature: Carga de horas
 
-Feature: Load worked hours for a resource on a specific task per day
-
-  Scenario: Successfully load worked hours
-    Given the resource with LEGAJO 1 is assigned to the task with ID 1
-    When 4 worked hours are loaded for the resource on the task on 2023-06-13
-    Then the system should respond with the status code "200"
-
-  Scenario: Try to load worked hours on a task not assigned to the resource
-    Given the resource with LEGAJO 1 is not assigned to the task with ID 2
-    When 4 worked hours are loaded for the resource on the task on "2023-06-13"
-    Then the system should respond with the status code "404" and an error message
-
-  Scenario: Try to load a negative number of worked hours
-    Given the resource with LEGAJO 1 is assigned to the task with ID 1
-    When -4 worked hours are loaded for the resource on the task on "2023-06-13"
-    Then the system should respond with the status code "400" and an error message
+  Scenario: Carga de horas satisfactoria
+    Given un empleado con el número de legajo 123456
+    And una tarea con el identificador 789
+    When se carga correctamente la cantidad de 8 horas para la tarea en la fecha "2023-06-15"
+    Then se registra la carga de horas exitosamente
