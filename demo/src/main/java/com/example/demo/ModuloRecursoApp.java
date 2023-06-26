@@ -7,6 +7,7 @@ import com.example.demo.service.RecursoService;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,9 @@ public class ModuloRecursoApp {
     @Autowired
     private RecursoService recursoService;
 
+    public static void main(String[] args) {
+        SpringApplication.run(ModuloRecursoApp.class, args);
+    }
     @PostMapping("/cargaHoras")
     public ResponseEntity<String> cargarHoras(@RequestBody CargaHoras cargaHoras) {
         boolean cargaExitosa = cargaHorasService.cargarHoras(cargaHoras.getLegajo(), cargaHoras.getTarea(), cargaHoras.getHoras(), cargaHoras.getFecha());
