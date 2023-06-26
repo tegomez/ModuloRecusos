@@ -8,4 +8,14 @@ public class Recurso {
     private String apellido;
     @Id
     private Long LEGAJO;
+
+    // Getters y setters
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public Long getLegajo() {
+        return LEGAJO;
+    }
 }
