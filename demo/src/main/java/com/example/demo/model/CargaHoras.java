@@ -8,7 +8,7 @@ public class CargaHoras {
     @Id
     private Long id;
 
-    private Long LEGAJO;
+    private Long legajo;
 
     private Long tarea;
 
@@ -17,7 +17,6 @@ public class CargaHoras {
     private String fecha;
 
     // Getters y setters
-
     public Long getId() {
         return id;
     }
@@ -27,11 +26,11 @@ public class CargaHoras {
     }
 
     public Long getLegajo() {
-        return LEGAJO;
+        return legajo;
     }
 
     public void setLegajo(Long legajo) {
-        this.LEGAJO = legajo;
+        this.legajo = legajo;
     }
 
     public Integer getHoras() {

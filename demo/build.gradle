@@ -18,11 +18,16 @@ dependencies {
 	runtimeOnly 'com.h2database:h2:2.1.214'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.postgresql:postgresql:42.2.24'
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation 'io.springfox:springfox-swagger2:3.0.0'
+	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
 }
 
 dependencies {
+    implementation 'org.jetbrains:annotations:20.1.0'
 
-	// Dependencias para Cucumber
+    // Dependencias para Cucumber
 	testImplementation 'io.cucumber:cucumber-java:7.1.0'
 	testImplementation 'io.cucumber:cucumber-junit:7.1.0'
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'

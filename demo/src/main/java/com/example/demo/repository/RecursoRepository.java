@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RecursoRepository extends CrudRepository<Recurso, Long> {
-        Optional<Recurso> findByLegajo(Long aLong);
+        Optional<Recurso> findByLegajo(Long legajo);
 
         @Override
         List<Recurso> findAll();

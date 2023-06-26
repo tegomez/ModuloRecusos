@@ -11,6 +11,17 @@ public class Recurso {
 
     // Getters y setters
 
+    Recurso(){}
+
+    public void setNombre(String name){
+        nombre = name;
+    }
+    public void setApellido(String name){
+        apellido = name;
+    }
+    public void setLegajo(Long padron){
+        legajo = padron;
+    }
     public String getNombre() {
         return nombre;
     }
