@@ -7,7 +7,7 @@ public class Recurso {
     private String nombre;
     private String apellido;
     @Id
-    private Long LEGAJO;
+    private Long legajo;
 
     // Getters y setters
 
@@ -16,6 +16,6 @@ public class Recurso {
     }
 
     public Long getLegajo() {
-        return LEGAJO;
+        return legajo;
     }
 }

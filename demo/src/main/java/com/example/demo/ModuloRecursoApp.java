@@ -44,8 +44,8 @@ public class ModuloRecursoApp {
     }
 
     @GetMapping("/{legajo}")
-    public ResponseEntity<Recurso> getLegajo(@PathVariable Long LEGAJO) {
-        Optional<Recurso> recurso = recursoService.findByLegajo(LEGAJO);
+    public ResponseEntity<Recurso> getLegajo(@PathVariable Long legajo) {
+        Optional<Recurso> recurso = recursoService.findByLegajo(legajo);
         if (!recurso.isPresent()) {
             return ResponseEntity.notFound().build();
         }
