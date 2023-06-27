@@ -40,8 +40,18 @@ public class ModuloRecursoApp {
         SpringApplication.run(ModuloRecursoApp.class, args);
     }
 
-     @PostMapping("/cargaHoras")
-     @ResponseStatus(HttpStatus.CREATED)
+
+    @RequestMapping("/recursos")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Recurso> getLegajo(@RequestParam Long legajo) {
+        Optional<Recurso> recurso = recursoService.findByLegajo(legajo);
+        if (!recurso.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.of(recurso);
+    }
+
+    @PostMapping("/cargaHoras")
     public ResponseEntity<String> cargarHoras(@RequestBody long legajo,@RequestBody long tarea,@RequestBody int cantidadHoras,@RequestBody String fecha) {
         boolean cargaExitosa = recursoService.cargarHoras(legajo,tarea,cantidadHoras,fecha);
         if (cargaExitosa) {
@@ -49,15 +59,6 @@ public class ModuloRecursoApp {
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo cargar las horas");
         }
-    }
-
-    @GetMapping("/{legajo}")
-    public ResponseEntity<Recurso> getLegajo(@PathVariable Long legajo) {
-        Optional<Recurso> recurso = recursoService.findByLegajo(legajo);
-        if (!recurso.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.of(recurso);
     }
 
     @Bean

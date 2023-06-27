@@ -4,26 +4,29 @@ import javax.persistence.*;
 
 @Entity
 public class Recurso {
-    private String nombre;
-    private String apellido;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long legajo;
+    private String Nombre;
+    private String Apellido;
+
+
 
     // Getters y setters
 
     Recurso(){}
 
     public void setNombre(String name){
-        nombre = name;
+        Nombre = name;
     }
     public void setApellido(String name){
-        apellido = name;
+        Apellido = name;
     }
     public void setLegajo(Long padron){
         legajo = padron;
     }
     public String getNombre() {
-        return nombre;
+        return Nombre;
     }
 
     public Long getLegajo() {
