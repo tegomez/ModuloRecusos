@@ -6,6 +6,7 @@ import com.example.demo.service.CargaHorasService;
 import com.example.demo.service.RecursoService;
 import java.util.Optional;
 
+import io.swagger.annotations.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -18,7 +19,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -42,7 +42,7 @@ public class ModuloRecursoApp {
 
         SpringApplication.run(ModuloRecursoApp.class, args);
     }
-
+/*
     @PostMapping("/cargaHoras")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> cargarHoras(@RequestBody CargaHoras cargaHoras) {
@@ -53,8 +53,28 @@ public class ModuloRecursoApp {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo cargar las horas");
         }
     }
+*/
+@PostMapping("/cargaHoras")
+@ResponseStatus(HttpStatus.CREATED)
+@ApiOperation(value = "Cargar horas", notes = "Cargar las horas trabajadas por un recurso")
+@ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Carga de horas exitosa"),
+        @ApiResponse(code = 500, message = "No se pudo cargar las horas")
+})
+public ResponseEntity<String> cargarHoras(
+        @ApiParam(value = "Legajo del recurso", example = "123") @RequestParam Long legajo,
+        @ApiParam(value = "Tarea realizada", example = "456") @RequestParam Long tarea,
+        @ApiParam(value = "Cantidad de horas trabajadas", example = "8") @RequestParam Integer cantidadHoras,
+        @ApiParam(value = "Fecha de la carga de horas", example = "2023-06-26") @RequestParam String fecha) {
+    boolean cargaExitosa = cargaHorasService.cargarHoras(legajo, tarea, cantidadHoras, fecha);
+    if (cargaExitosa) {
+        return ResponseEntity.ok("Carga de horas exitosa");
+    } else {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo cargar las horas");
+    }
+}
 
-/*
+    /*
     @GetMapping("/{legajo}")
     public ResponseEntity<Recurso> getLegajo(@PathVariable Long legajo) {
         Optional<Recurso> recurso = recursoService.findByLegajo(legajo);
