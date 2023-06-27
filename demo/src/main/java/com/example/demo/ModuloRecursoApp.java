@@ -5,6 +5,7 @@ import com.example.demo.model.CargaHoras;
 import com.example.demo.service.CargaHorasService;
 import com.example.demo.service.RecursoService;
 import java.util.Optional;
+import java.util.Collection;
 
 import io.swagger.annotations.*;
 import org.jetbrains.annotations.NotNull;
@@ -74,8 +75,7 @@ public ResponseEntity<String> cargarHoras(
     }
 }
 
-    /*
-    @GetMapping("/{legajo}")
+    @GetMapping("/recursos/{legajo}")
     public ResponseEntity<Recurso> getLegajo(@PathVariable Long legajo) {
         Optional<Recurso> recurso = recursoService.findByLegajo(legajo);
         if (!recurso.isPresent()) {
@@ -83,7 +83,11 @@ public ResponseEntity<String> cargarHoras(
         }
         return ResponseEntity.of(recurso);
     }
-*/
+
+    @GetMapping("/recursos")
+    public Collection<Recurso> getRecursos() {
+        return recursoService.getRecursos();
+    }
     @Bean
     public Docket apiDocket() {
         return new Docket(DocumentationType.SWAGGER_2)

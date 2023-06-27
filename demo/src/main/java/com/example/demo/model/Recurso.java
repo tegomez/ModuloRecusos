@@ -4,28 +4,30 @@ import javax.persistence.*;
 
 @Entity
 public class Recurso {
-    private String nombre;
-    private String apellido;
     @Id
-    private Long legajo;
+    private long legajo;
+    private String Nombre;
+    private String Apellido;
 
     // Getters y setters
 
     Recurso(){}
 
     public void setNombre(String name){
-        nombre = name;
+        Nombre = name;
     }
     public void setApellido(String name){
-        apellido = name;
+        Apellido = name;
     }
     public void setLegajo(Long legajo){
         legajo = legajo;
     }
     public String getNombre() {
-        return nombre;
+        return Nombre;
     }
-
+    public String getApellido(){
+        return Apellido;
+    }
     public Long getLegajo() {
         return legajo;
     }
