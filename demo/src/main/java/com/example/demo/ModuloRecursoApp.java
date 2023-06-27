@@ -4,6 +4,8 @@ import com.example.demo.model.CargaHoras;
 
 import com.example.demo.service.CargaHorasService;
 import com.example.demo.service.RecursoService;
+
+import java.util.Collection;
 import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
@@ -41,9 +43,9 @@ public class ModuloRecursoApp {
     }
 
 
-    @RequestMapping("/recursos")
+    @GetMapping("/recursos/{legajo}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Recurso> getLegajo(@RequestParam Long legajo) {
+    public ResponseEntity<Recurso> getLegajo(@PathVariable Long legajo) {
         Optional<Recurso> recurso = recursoService.findByLegajo(legajo);
         if (!recurso.isPresent()) {
             return ResponseEntity.notFound().build();
@@ -51,8 +53,13 @@ public class ModuloRecursoApp {
         return ResponseEntity.of(recurso);
     }
 
+    @GetMapping("/recursos")
+    public Collection<Recurso> getRecursos() {
+        return recursoService.getRecursos();
+    }
+
     @PostMapping("/cargaHoras")
-    public ResponseEntity<String> cargarHoras(@RequestBody long legajo,@RequestBody long tarea,@RequestBody int cantidadHoras,@RequestBody String fecha) {
+    public ResponseEntity<String> cargarHoras(@RequestParam long legajo,@RequestParam long tarea,@RequestParam int cantidadHoras,@RequestParam String fecha) {
         boolean cargaExitosa = recursoService.cargarHoras(legajo,tarea,cantidadHoras,fecha);
         if (cargaExitosa) {
             return ResponseEntity.ok("Carga de horas exitosa");
@@ -69,4 +76,5 @@ public class ModuloRecursoApp {
                 .paths(PathSelectors.any())
                 .build();
     }
+
 }
