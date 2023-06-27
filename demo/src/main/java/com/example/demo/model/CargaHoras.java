@@ -2,6 +2,8 @@ package com.example.demo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 @Entity
 public class CargaHoras {
@@ -12,7 +14,7 @@ public class CargaHoras {
 
     private Long tarea;
 
-    private Integer horas;
+    private Integer cantidadHoras;
 
     private String fecha;
 
@@ -33,12 +35,12 @@ public class CargaHoras {
         this.legajo = legajo;
     }
 
-    public Integer getHoras() {
-        return horas;
+    public Integer getCantidadHoras() {
+        return cantidadHoras;
     }
 
-    public void setHoras(Integer horas) {
-        this.horas = horas;
+    public void setCantidadHoras(Integer horas) {
+        this.cantidadHoras = horas;
     }
 
     public String getFecha() {

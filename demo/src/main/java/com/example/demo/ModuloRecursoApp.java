@@ -35,15 +35,18 @@ public class ModuloRecursoApp {
 
     @Autowired
     private RecursoService recursoService;
+    @Autowired
+    private CargaHorasService cargaHorasService;
 
     public static void main(String[] args) {
+
         SpringApplication.run(ModuloRecursoApp.class, args);
     }
 
-     @PostMapping("/cargaHoras")
-     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> cargarHoras(@RequestBody long legajo,@RequestBody long tarea,@RequestBody int cantidadHoras,@RequestBody String fecha) {
-        boolean cargaExitosa = recursoService.cargarHoras(legajo,tarea,cantidadHoras,fecha);
+    @PostMapping("/cargaHoras")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> cargarHoras(@RequestBody CargaHoras cargaHoras) {
+        boolean cargaExitosa = cargaHorasService.cargarHoras(cargaHoras.getLegajo(), cargaHoras.getTarea(), cargaHoras.getCantidadHoras(), cargaHoras.getFecha());
         if (cargaExitosa) {
             return ResponseEntity.ok("Carga de horas exitosa");
         } else {
@@ -51,6 +54,7 @@ public class ModuloRecursoApp {
         }
     }
 
+/*
     @GetMapping("/{legajo}")
     public ResponseEntity<Recurso> getLegajo(@PathVariable Long legajo) {
         Optional<Recurso> recurso = recursoService.findByLegajo(legajo);
@@ -59,13 +63,12 @@ public class ModuloRecursoApp {
         }
         return ResponseEntity.of(recurso);
     }
-
+*/
     @Bean
     public Docket apiDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.example.demo"))
                 .build();
     }
 }

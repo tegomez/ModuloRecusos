@@ -19,8 +19,8 @@ public class Recurso {
     public void setApellido(String name){
         apellido = name;
     }
-    public void setLegajo(Long padron){
-        legajo = padron;
+    public void setLegajo(Long legajo){
+        legajo = legajo;
     }
     public String getNombre() {
         return nombre;

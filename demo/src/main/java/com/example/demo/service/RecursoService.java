@@ -11,23 +11,15 @@ import java.util.Optional;
 public class RecursoService {
     @Autowired
     private RecursoRepository recursoRepository;
-    @Autowired
-    private CargaHorasRepository cargaHorasRepository;
 
     public Optional<Recurso> findByLegajo(Long legajo) {
         return recursoRepository.findByLegajo(legajo);
     }
+
     public boolean cargarHoras(long legajo, long tarea, int cantidadHoras, String fecha) {
         try {
-            CargaHoras cargaHoras = new CargaHoras();
-            cargaHoras.setLegajo(legajo);
-            cargaHoras.setTarea(tarea);
-            cargaHoras.setHoras(cantidadHoras);
-            cargaHoras.setFecha(fecha);
-
-            cargaHorasRepository.save(cargaHoras);
-
-            return true; // La carga de horas se realizó exitosamente
+            CargaHorasService cargaHorasService = new CargaHorasService();
+            return cargaHorasService.cargarHoras(legajo, tarea, cantidadHoras, fecha);
         } catch (Exception e) {
             return false; // La carga de horas falló
         }
