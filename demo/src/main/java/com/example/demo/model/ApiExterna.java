@@ -1,5 +1,5 @@
 package com.example.demo.model;
-
+import com.example.demo.exceptions.RecursoNoEncontradoException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -15,8 +15,6 @@ import java.net.http.HttpResponse;
 import com.google.gson.Gson;
 
 import java.util.List;
-
-
 
 public class ApiExterna {
     private static final String API_URL = "https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.1/m/api/recursos";
@@ -67,6 +65,7 @@ public class ApiExterna {
             }
             System.out.println("Status code: " + statusCode);
             System.out.println("Response body: " + responseBody);
+            throw new RecursoNoEncontradoException("El legajo " + legajoBuscado + " no pertenece a la API externa.");
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }

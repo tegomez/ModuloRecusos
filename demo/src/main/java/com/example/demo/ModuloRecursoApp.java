@@ -1,7 +1,7 @@
 package com.example.demo;
 import com.example.demo.model.Recurso;
 import com.example.demo.model.CargaHoras;
-
+import com.example.demo.exceptions.*;
 import com.example.demo.service.CargaHorasService;
 import com.example.demo.service.RecursoService;
 import java.util.Optional;
@@ -46,19 +46,8 @@ public class ModuloRecursoApp {
 /*
     @PostMapping("/cargaHoras")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> cargarHoras(@RequestBody CargaHoras cargaHoras) {
-        boolean cargaExitosa = cargaHorasService.cargarHoras(cargaHoras.getLegajo(), cargaHoras.getTarea(), cargaHoras.getCantidadHoras(), cargaHoras.getFecha());
-        if (cargaExitosa) {
-            return ResponseEntity.ok("Carga de horas exitosa");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo cargar las horas");
-        }
-    }
-*/
-@PostMapping("/cargaHoras")
-@ResponseStatus(HttpStatus.CREATED)
-@ApiOperation(value = "Cargar horas", notes = "Cargar las horas trabajadas por un recurso")
-@ApiResponses(value = {
+    @ApiOperation(value = "Cargar horas", notes = "Cargar las horas trabajadas por un recurso")
+    @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Carga de horas exitosa"),
         @ApiResponse(code = 500, message = "No se pudo cargar las horas")
 })
@@ -74,6 +63,37 @@ public ResponseEntity<String> cargarHoras(
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo cargar las horas");
     }
 }
+*/
+
+    @PostMapping("/cargaHoras")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Cargar horas", notes = "Cargar las horas trabajadas por un recurso")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Carga de horas exitosa"),
+            @ApiResponse(code = 400, message = "Datos de carga de horas inválidos"),
+            @ApiResponse(code = 404, message = "Recurso no encontrado"),
+            @ApiResponse(code = 500, message = "No se pudo cargar las horas")
+    })
+    public ResponseEntity<String> cargarHoras(
+            @ApiParam(value = "Legajo del recurso", example = "123") @RequestParam Long legajo,
+            @ApiParam(value = "Tarea realizada", example = "456") @RequestParam Long tarea,
+            @ApiParam(value = "Cantidad de horas trabajadas", example = "8") @RequestParam Integer cantidadHoras,
+            @ApiParam(value = "Fecha de la carga de horas", example = "2023-06-26") @RequestParam String fecha) {
+        try {
+            cargaHorasService.cargarHoras(legajo, tarea, cantidadHoras, fecha);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Carga de horas exitosa");
+        } catch (CantidadDeHorasNegativasException e) {
+            return ResponseEntity.badRequest().body("No se permiten horas negativas");
+        } catch (FormatoFechaIncorrectoException e) {
+            return ResponseEntity.badRequest().body("El formato de la fecha es incorrecto. Debe ser AAAA-MM-DD");
+        } catch (CantidadDeHorasNoNumericoException e) {
+            return ResponseEntity.badRequest().body("La cantidad de horas debe ser numérica");
+        } catch (RecursoNoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El recurso con el legajo especificado no fue encontrado");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo realizar la carga horas");
+        }
+    }
 
     @GetMapping("/recursos/{legajo}")
     public ResponseEntity<Recurso> getLegajo(@PathVariable Long legajo) {
