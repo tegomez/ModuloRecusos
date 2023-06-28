@@ -23,8 +23,5 @@ WORKDIR /app
 # Copy the built JAR file from the builder stage
 COPY --from=builder /app/build/libs/demo-0.0.1-SNAPSHOT.jar .
 
-# Expose the port your application listens on (change accordingly if needed)
-EXPOSE 8080
-
 # Run the Java application
 CMD ["java", "-jar", "demo-0.0.1-SNAPSHOT.jar"]
