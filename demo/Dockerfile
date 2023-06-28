@@ -4,11 +4,6 @@ FROM gradle:jdk11 as builder
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the build.gradle and settings.gradle files to the container
-COPY build.gradle .
-COPY settings.gradle .
-
-# Copy the entire source code to the container
 COPY . .
 
 # Build the application with Gradle
