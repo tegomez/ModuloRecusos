@@ -64,6 +64,11 @@ public class CargaHorasService {
             return false; // La carga de horas falló
         }
     }
+
+    public List<CargaHoras> getCargaHorasByLegajo(Long legajo) {
+        return cargaHorasRepository.findByLegajo(legajo);
+    }
+
     private boolean esNumerico(int cantidadHoras) {
         try {
             Integer.parseInt(String.valueOf(cantidadHoras));
