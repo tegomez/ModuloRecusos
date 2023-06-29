@@ -1,22 +1,21 @@
-# Use the official Gradle image as the base image
-FROM gradle:jdk11 as builder
+# Use an official Java runtime as the base image
+FROM adoptopenjdk:11-jdk-hotspot
 
 # Set the working directory in the container
 WORKDIR /app
 
-COPY . .
+# Copy the Gradle build files
+COPY build.gradle settings.gradle gradlew /app/
+COPY gradle /app/gradle
 
-# Build the application with Gradle
-RUN gradle build
+# Copy the application source code
+COPY src /app/src
 
-# Use the official OpenJDK image as the base image for the runtime container
-FROM openjdk:11-jre-slim
+# Build the application using Gradle
+RUN ./gradlew build
 
-# Set the working directory in the container
-WORKDIR /app
+# Expose the port on which the application will run
+EXPOSE 8080
 
-# Copy the built JAR file from the builder stage
-COPY --from=builder /app/build/libs/demo-0.0.1-SNAPSHOT.jar .
-
-# Run the Java application
-CMD ["java", "-jar", "demo-0.0.1-SNAPSHOT.jar"]
+# Set the command to run the application
+CMD ["java", "-jar", "/app/build/libs/demo-1.0.0.jar"]
